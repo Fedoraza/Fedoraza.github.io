@@ -1,44 +1,79 @@
 <!DOCTYPE HTML>
-
 <html>
-	<head>
-		<title>Fedor Musil</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="assets/css/main.css" />
-		<noscript><link rel="stylesheet" href="assets/css/noscript.css" /></noscript>
-	</head>
-	<body class="is-preload">
-		<div id="wrapper">
-			<div id="bg"></div>
-			<div id="overlay"></div>
-			<div id="main">
 
-				<!-- Header -->
-					<header id="header">
-						<h1>Fedor Musil</h1>
-						<nav>
-							<ul>
-								<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-								<li><a href="https://www.instagram.com/f3d0r.88/" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-								<li><a href="https://www.linkedin.com/in/fedor-musil-a485a8201/" class="fab fa-linkedin"><span class="label">Linkdin</span></a></li>
-								<li><a href="https://github.com/Fedoraza" class="icon brands fa-github"><span class="label">Github</span></a></li>
-								<li><a href="mailto:fedor@musil.nl" class="icon solid fa-envelope"><span class="label">Email</span></a></li>
-							</ul>
-						</nav>
-					</header>
+<head>
+	<title>Fedor Musil</title>
+	<meta charset="utf-8" />
+	<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+	<link rel="stylesheet" href="assets/css/main.css" />
+	<style>
+		#profile-picture {
+			width: 300px;
+			height: 300px;
+			overflow: hidden;
+			border-radius: 50%;
+			margin: 0 auto;
+			margin-bottom: 20px;
+		}
 
-				<!-- Footer -->
-					<footer id="footer">
-						<span class="copyright">&copy; Fedor Musil.</span>
-					</footer>
+		#profile-picture img {
+			width: 100%;
+			height: 100%;
+			object-fit: cover;
+			border-radius: 50%;
+		}
+	</style>
+	<noscript>
+		<link rel="stylesheet" href="assets/css/noscript.css" />
+	</noscript>
+</head>
 
-			</div>
+<body class="is-preload">
+	<div id="wrapper">
+		<div id="bg"></div>
+		<div id="overlay"></div>
+		<div id="main">
+
+			<!-- Header -->
+			<header id="header">
+				<!-- Profile Picture -->
+				<div id="profile-picture">
+					<img src="assets/profileimage.jpeg" alt="Fedor Musil's Profile Picture">
+				</div>
+				<h1>Fedor Musil</h1>
+				<nav>
+					<ul>
+						<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
+						<li><a href="https://www.instagram.com/f3d0r.88/" class="icon brands fa-instagram"><span
+									class="label">Instagram</span></a></li>
+						<li><a href="https://www.linkedin.com/in/fedor-musil-a485a8201/" class="fab fa-linkedin"><span
+									class="label">LinkedIn</span></a></li>
+						<li><a href="https://github.com/Fedoraza" class="icon brands fa-github"><span
+									class="label">Github</span></a></li>
+						<li><a href="mailto:fedor@musil.nl" class="icon solid fa-envelope"><span
+									class="label">Email</span></a></li>
+					</ul>
+				</nav>
+			</header>
+
+			<!-- Footer -->
+			<footer id="footer">
+				<span class="copyright">&copy; Fedor Musil.</span>
+			</footer>
+
 		</div>
-		<script>
-			window.onload = function() { document.body.classList.remove('is-preload'); }
-			window.ontouchmove = function() { return false; }
-			window.onorientationchange = function() { document.body.scrollTop = 0; }
-		</script>
-	</body>
+	</div>
+	<script>
+		window.onload = function () {
+			document.body.classList.remove('is-preload');
+		}
+		window.ontouchmove = function () {
+			return false;
+		}
+		window.onorientationchange = function () {
+			document.body.scrollTop = 0;
+		}
+	</script>
+</body>
+
 </html>
