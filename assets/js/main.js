@@ -19,7 +19,9 @@
     headerToggleBtn.classList.toggle('bi-list');
     headerToggleBtn.classList.toggle('bi-x');
   }
-  headerToggleBtn.addEventListener('click', headerToggle);
+  if (headerToggleBtn) {
+    headerToggleBtn.addEventListener('click', headerToggle);
+  }
 
   /**
    * Hide mobile nav on same-page/hash links
@@ -65,13 +67,15 @@
       window.scrollY > 100 ? scrollTop.classList.add('active') : scrollTop.classList.remove('active');
     }
   }
-  scrollTop.addEventListener('click', (e) => {
-    e.preventDefault();
-    window.scrollTo({
-      top: 0,
-      behavior: 'smooth'
+  if (scrollTop) {
+    scrollTop.addEventListener('click', (e) => {
+      e.preventDefault();
+      window.scrollTo({
+        top: 0,
+        behavior: 'smooth'
+      });
     });
-  });
+  }
 
   window.addEventListener('load', toggleScrollTop);
   document.addEventListener('scroll', toggleScrollTop);
@@ -80,6 +84,7 @@
    * Animation on scroll function and init
    */
   function aosInit() {
+    if (typeof AOS === 'undefined') return;
     AOS.init({
       duration: 600,
       easing: 'ease-in-out',
@@ -96,7 +101,7 @@
   if (selectTyped) {
     let typed_strings = selectTyped.getAttribute('data-typed-items');
     typed_strings = typed_strings.split(',');
-    new Typed('.typed', {
+    if (typeof Typed !== 'undefined') new Typed('.typed', {
       strings: typed_strings,
       loop: true,
       typeSpeed: 100,
@@ -108,13 +113,16 @@
   /**
    * Initiate Pure Counter
    */
-  new PureCounter();
+  if (typeof PureCounter !== 'undefined') {
+    new PureCounter();
+  }
 
   /**
    * Animate the skills items on reveal
    */
   let skillsAnimation = document.querySelectorAll('.skills-animation');
   skillsAnimation.forEach((item) => {
+    if (typeof Waypoint === 'undefined') return;
     new Waypoint({
       element: item,
       offset: '80%',
@@ -130,14 +138,17 @@
   /**
    * Initiate glightbox
    */
-  const glightbox = GLightbox({
-    selector: '.glightbox'
-  });
+  if (typeof GLightbox !== 'undefined') {
+    GLightbox({
+      selector: '.glightbox'
+    });
+  }
 
   /**
    * Init isotope layout and filters
    */
   document.querySelectorAll('.isotope-layout').forEach(function(isotopeItem) {
+    if (typeof imagesLoaded === 'undefined' || typeof Isotope === 'undefined') return;
     let layout = isotopeItem.getAttribute('data-layout') ?? 'masonry';
     let filter = isotopeItem.getAttribute('data-default-filter') ?? '*';
     let sort = isotopeItem.getAttribute('data-sort') ?? 'original-order';
@@ -178,7 +189,7 @@
 
       if (swiperElement.classList.contains("swiper-tab")) {
         initSwiperWithCustomPagination(swiperElement, config);
-      } else {
+      } else if (typeof Swiper !== 'undefined') {
         new Swiper(swiperElement, config);
       }
     });
@@ -225,5 +236,74 @@
   }
   window.addEventListener('load', navmenuScrollspy);
   document.addEventListener('scroll', navmenuScrollspy);
+
+  /**
+   * Review platform chooser
+   */
+  const reviewTrigger = document.querySelector('[data-review-trigger]');
+  const reviewModal = document.querySelector('[data-review-modal]');
+  const reviewCloseButtons = document.querySelectorAll('[data-review-close]');
+  const firstReviewOption = document.querySelector('[data-review-option]');
+  const copyReviewButton = document.querySelector('[data-copy-review]');
+  const reviewCopyText = document.querySelector('#review-copy-text');
+
+  function openReviewModal() {
+    if (!reviewModal) return;
+    reviewModal.hidden = false;
+    document.body.classList.add('modal-open');
+    if (firstReviewOption) firstReviewOption.focus();
+  }
+
+  function closeReviewModal() {
+    if (!reviewModal) return;
+    reviewModal.hidden = true;
+    document.body.classList.remove('modal-open');
+    if (reviewTrigger) reviewTrigger.focus();
+  }
+
+  if (reviewTrigger) {
+    reviewTrigger.addEventListener('click', openReviewModal);
+  }
+
+  reviewCloseButtons.forEach((button) => {
+    button.addEventListener('click', closeReviewModal);
+  });
+
+  function fallbackCopyText(text) {
+    const textArea = document.createElement('textarea');
+    textArea.value = text;
+    textArea.setAttribute('readonly', '');
+    textArea.style.position = 'fixed';
+    textArea.style.top = '-999px';
+    document.body.appendChild(textArea);
+    textArea.select();
+    document.execCommand('copy');
+    textArea.remove();
+  }
+
+  if (copyReviewButton && reviewCopyText) {
+    copyReviewButton.addEventListener('click', async () => {
+      const text = reviewCopyText.textContent.trim();
+
+      try {
+        if (navigator.clipboard) {
+          await navigator.clipboard.writeText(text);
+        } else {
+          fallbackCopyText(text);
+        }
+
+        copyReviewButton.querySelector('span').textContent = 'Copied';
+      } catch (error) {
+        fallbackCopyText(text);
+        copyReviewButton.querySelector('span').textContent = 'Copied';
+      }
+    });
+  }
+
+  document.addEventListener('keydown', (event) => {
+    if (event.key === 'Escape' && reviewModal && !reviewModal.hidden) {
+      closeReviewModal();
+    }
+  });
 
 })();
